@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Fake Hacker Terminal v1.0 — A cinematic hacking experience" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <title>H4CK3R TERMINAL v1.0</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Canvas for Matrix rain effect -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <!-- CRT scanline overlay -->
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="flicker-overlay" aria-hidden="true"></div>
+
+  <!-- Boot screen -->
+  <div id="boot-screen" role="status" aria-live="polite">
+    <div class="boot-logo">
+      <pre class="ascii-logo" aria-label="Hacker Terminal ASCII art">
+ ██╗  ██╗ █████╗  ██████╗██╗  ██╗
+ ██║  ██║██╔══██╗██╔════╝██║ ██╔╝
+ ███████║███████║██║     █████╔╝ 
+ ██╔══██║██╔══██║██║     ██╔═██╗ 
+ ██║  ██║██║  ██║╚██████╗██║  ██╗
+ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+      </pre>
+      <div class="boot-subtitle">TERMINAL v1.0 — UNAUTHORIZED ACCESS PROHIBITED</div>
+    </div>
+    <div class="boot-progress-container">
+      <div class="boot-log" id="boot-log"></div>
+      <div class="boot-bar-wrap">
+        <div class="boot-bar" id="boot-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main terminal -->
+  <main id="terminal" role="main" aria-label="Hacker Terminal" style="display:none">
+    <!-- Terminal header bar -->
+    <header class="terminal-header" role="banner">
+      <div class="header-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <div class="header-title">root@h4ck3r:~$ — SECURE SHELL</div>
+      <div class="header-status">
+        <span class="status-blink">●</span> CONNECTED
+        <span id="clock" aria-live="off"></span>
+      </div>
+    </header>
+
+    <!-- Output area -->
+    <section
+      id="output"
+      class="output"
+      role="log"
+      aria-live="polite"
+      aria-label="Terminal output"
+      tabindex="0"
+    ></section>
+
+    <!-- Auto-suggest dropdown -->
+    <div id="suggestions" class="suggestions" role="listbox" aria-label="Command suggestions" style="display:none"></div>
+
+    <!-- Input line -->
+    <footer class="input-area" role="contentinfo">
+      <div class="input-line">
+        <span class="prompt" id="prompt-label">user@system:~$</span>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="cmd-input"
+            class="cmd-input"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Terminal command input"
+            aria-autocomplete="list"
+            aria-controls="suggestions"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Password modal overlay -->
+  <div id="pw-overlay" class="pw-overlay" style="display:none" role="dialog" aria-modal="true" aria-label="Password input">
+    <div class="pw-box">
+      <div class="pw-label" id="pw-label">ENTER PASSWORD:</div>
+      <div class="pw-input-line">
+        <span class="pw-prompt">password:</span>
+        <input type="password" id="pw-input" class="pw-input" aria-label="Password" autocomplete="off" />
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
